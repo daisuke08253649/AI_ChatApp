@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
 import AutoResizeTextarea from "@/components/autoresize-textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown, { Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
 const MODEL_OPTIONS = [
@@ -82,14 +82,13 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"div">) {
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
-                          code: ({ node, inline, className, children, ...props }: any) => (
-                            <code
-                              className={cn("bg-muted/50 rounded px-1", inline ? "py-0.5" : "block p-2")}
-                              {...props}
-                            >
-                              {children}
-                            </code>
-                          )
+                          code: function Code(props: { inline?: boolean; children?: React.ReactNode }) {
+                            return (
+                              <code className={cn("bg-muted/50 rounded px-1", props.inline ? "py-0.5" : "block p-2")}>
+                                {props.children}
+                              </code>
+                            )
+                          }
                         }}
                       >
                         {message.content}
