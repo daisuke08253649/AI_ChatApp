@@ -82,14 +82,14 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"div">) {
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
-                          code(props: any) {
-                            const { inline, className, children } = props;
-                            return (
-                              <code className={cn("bg-muted/50 rounded px-1", inline ? "py-0.5" : "block p-2")}>
-                                {children}
-                              </code>
-                            )
-                          }
+                          code: ({ node, inline, className, children, ...props }: any) => (
+                            <code
+                              className={cn("bg-muted/50 rounded px-1", inline ? "py-0.5" : "block p-2")}
+                              {...props}
+                            >
+                              {children}
+                            </code>
+                          )
                         }}
                       >
                         {message.content}

@@ -12,7 +12,8 @@ export default async function handler(
     try {
       const message = await Message.create(req.body);
       return res.status(201).json(message);
-    } catch (error) {
+    } catch (e) {
+      console.error('Save error:', e);
       return res.status(500).json({ error: 'メッセージの保存に失敗しました' });
     }
   }
@@ -21,7 +22,8 @@ export default async function handler(
     try {
       const messages = await Message.find().sort({ createdAt: 1 });
       return res.status(200).json(messages);
-    } catch (error) {
+    } catch (e) {
+      console.error('Fetch error:', e);
       return res.status(500).json({ error: 'メッセージの取得に失敗しました' });
     }
   }
